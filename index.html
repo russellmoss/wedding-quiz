@@ -47,41 +47,53 @@
             transform: scale(1.05);
         }
 
-        /* Navigation Menu */
+        /* Navigation Menu - Enhanced to ensure visibility */
         .main-nav {
             text-align: center;
             margin-bottom: 40px;
+            padding: 20px 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
         }
 
         .nav-links {
-            display: flex;
+            display: flex !important;
             justify-content: center;
             align-items: center;
             gap: 40px;
-            list-style: none;
+            list-style: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
 
         .nav-link {
+            display: inline-block !important;
             text-decoration: none;
-            color: #715100;
+            color: #715100 !important;
             font-weight: 500;
             font-size: 1.1rem;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border-radius: 8px;
             transition: all 0.3s ease;
             position: relative;
+            border: 2px solid transparent;
+        }
+
+        .nav-link:visited {
+            color: #715100 !important;
         }
 
         .nav-link:hover {
-            color: #5a4000;
-            background-color: rgba(113, 81, 0, 0.05);
-            transform: translateY(-1px);
+            color: #5a4000 !important;
+            background-color: rgba(113, 81, 0, 0.1);
+            transform: translateY(-2px);
+            border-color: rgba(113, 81, 0, 0.2);
         }
 
         .nav-link::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: 5px;
             left: 50%;
             width: 0;
             height: 2px;
@@ -92,29 +104,6 @@
 
         .nav-link:hover::after {
             width: 80%;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .nav-link {
-                font-size: 1rem;
-                padding: 8px 16px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .nav-links {
-                gap: 10px;
-            }
-            
-            .nav-link {
-                font-size: 0.9rem;
-                padding: 6px 12px;
-            }
         }
 
         /* Carousel Section */
@@ -342,24 +331,6 @@
             font-weight: 500;
         }
 
-        @media (max-width: 768px) {
-            .checkbox-group {
-                grid-template-columns: 1fr;
-            }
-            
-            .name-row {
-                flex-direction: column;
-            }
-            
-            .name-field {
-                margin-bottom: 15px;
-            }
-            
-            .name-field:last-child {
-                margin-bottom: 0;
-            }
-        }
-
         /* Name fields side by side */
         .name-row {
             display: flex;
@@ -525,6 +496,16 @@
                 margin-bottom: 15px;
             }
 
+            .nav-links {
+                flex-direction: column !important;
+                gap: 15px !important;
+            }
+            
+            .nav-link {
+                font-size: 1rem;
+                padding: 8px 16px;
+            }
+
             .carousel-container {
                 height: 250px;
             }
@@ -547,9 +528,34 @@
                 width: 100%;
                 max-width: 300px;
             }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .name-row {
+                flex-direction: column;
+            }
+            
+            .name-field {
+                margin-bottom: 15px;
+            }
+            
+            .name-field:last-child {
+                margin-bottom: 0;
+            }
         }
 
         @media (max-width: 480px) {
+            .nav-links {
+                gap: 10px !important;
+            }
+            
+            .nav-link {
+                font-size: 0.9rem;
+                padding: 6px 12px;
+            }
+
             .quiz-title {
                 font-size: 1.8rem;
             }
@@ -575,7 +581,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header with Logo -->
+        <!-- Header with Logo and Navigation -->
         <div class="header">
             <img src="https://i.imgur.com/qfTW5j0.png" alt="Milea Estate Vineyard" class="logo" loading="lazy">
             
