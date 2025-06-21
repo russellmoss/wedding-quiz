@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wedding Quiz - Milea Estate Vineyard</title>
+    <meta name="description" content="Find your perfect wedding at Milea Estate Vineyard. Take our quiz to get a personalized wedding experience.">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8f6f0;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            width: 20%;
+            max-width: 200px;
+            min-width: 120px;
+            height: auto;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        /* Carousel Section */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(113, 81, 0, 0.2);
+            height: 400px;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Carousel indicators */
+        .carousel-indicators {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .indicator.active {
+            background-color: #715100;
+        }
+
+        /* Quiz Form Section */
+        .quiz-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 0 auto 40px;
+            max-width: 600px;
+            box-shadow: 0 15px 40px rgba(113, 81, 0, 0.1);
+            border: 2px solid rgba(113, 81, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #715100, #a67c00);
+        }
+
+        .quiz-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #715100;
+            text-align: center;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .quiz-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+        .form-group:nth-child(5) { animation-delay: 0.5s; }
+        .form-group:nth-child(6) { animation-delay: 0.6s; }
+        .form-group:nth-child(7) { animation-delay: 0.7s; }
+        .form-group:nth-child(8) { animation-delay: 0.8s; }
+        .submit-btn { animation-delay: 0.9s; }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #715100;
+            font-size: 1rem;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            background-color: #fff;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #715100;
+            box-shadow: 0 0 0 3px rgba(113, 81, 0, 0.1);
+            transform: translateY(-1px);
+        }
+
+        /* Checkbox Styles */
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background-color: #fff;
+        }
+
+        .checkbox-item:hover {
+            border-color: #715100;
+            background-color: #f9f7f0;
+        }
+
+        .checkbox-item.checked {
+            border-color: #715100;
+            background-color: #f9f7f0;
+            box-shadow: 0 0 0 2px rgba(113, 81, 0, 0.1);
+        }
+
+        .form-checkbox {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #715100;
+            border-radius: 4px;
+            margin-right: 12px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-checkbox:checked {
+            background-color: #715100;
+            border-color: #715100;
+        }
+
+        .form-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .checkbox-label {
+            font-size: 1rem;
+            color: #333;
+            cursor: pointer;
+            flex: 1;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #715100, #5a4000);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #5a4000, #715100);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(113, 81, 0, 0.3);
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 20px;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 2px solid #715100;
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .cta-btn:hover::before {
+            left: 100%;
+        }
+
+        .cta-btn.primary {
+            background: linear-gradient(135deg, #715100, #5a4000);
+            color: white;
+        }
+
+        .cta-btn.primary:hover {
+            background: linear-gradient(135deg, #5a4000, #715100);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(113, 81, 0, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+
+        .cta-btn.secondary {
+            background-color: transparent;
+            color: #715100;
+        }
+
+        .cta-btn.secondary:hover {
+            background: linear-gradient(135deg, #715100, #5a4000);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(113, 81, 0, 0.3);
+            text-decoration: none;
+        }
+
+        /* Loading spinner */
+        .loading {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .logo {
+                width: 30%;
+                margin-bottom: 20px;
+            }
+
+            .carousel-container {
+                height: 250px;
+            }
+
+            .quiz-section {
+                padding: 25px;
+                margin-bottom: 30px;
+            }
+
+            .quiz-title {
+                font-size: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .quiz-title {
+                font-size: 1.8rem;
+            }
+
+            .quiz-section {
+                padding: 20px;
+            }
+
+            .carousel-container {
+                height: 200px;
+            }
+        }
+
+        /* Accessibility improvements */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header with Logo -->
+        <div class="header">
+            <img src="https://i.imgur.com/qfTW5j0.png" alt="Milea Estate Vineyard" class="logo" loading="lazy">
+        </div>
+
+        <!-- Image Carousel -->
+        <div class="carousel-container">
+            <div class="carousel-slide active">
+                <img src="https://i.imgur.com/WalHXL3.jpeg" alt="Elegant wedding ceremony at Milea Estate" loading="lazy">
+            </div>
+            <div class="carousel-slide">
+                <img src="https://i.imgur.com/JESR9i2.jpeg" alt="Beautiful wedding reception setup" loading="lazy">
+            </div>
+            <div class="carousel-slide">
+                <img src="https://i.imgur.com/8gqd2nH.jpeg" alt="Garden wedding at the vineyard" loading="lazy">
+            </div>
+            <div class="carousel-slide">
+                <img src="https://i.imgur.com/5KXtFUR.jpeg" alt="Rustic wedding celebration" loading="lazy">
+            </div>
+            <div class="carousel-slide">
+                <img src="https://i.imgur.com/fhYQ28D.jpeg" alt="Modern wedding venue setup" loading="lazy">
+            </div>
+            
+            <!-- Carousel Indicators -->
+            <div class="carousel-indicators">
+                <div class="indicator active" data-slide="0"></div>
+                <div class="indicator" data-slide="1"></div>
+                <div class="indicator" data-slide="2"></div>
+                <div class="indicator" data-slide="3"></div>
+                <div class="indicator" data-slide="4"></div>
+            </div>
+        </div>
+
+        <!-- Quiz Form -->
+        <div class="quiz-section">
+            <h1 class="quiz-title">Find Your Perfect Wedding</h1>
+            <p class="quiz-subtitle">Tell us about your dream wedding and we'll create a personalized experience just for you.</p>
+            
+            <form id="weddingQuiz" action="https://hooks.zapier.com/hooks/catch/21145311/uoes9s5/" method="POST">
+                <div class="form-group">
+                    <label for="season" class="form-label">What season are you envisioning?</label>
+                    <select id="season" name="season" class="form-select" required>
+                        <option value="">Select a season</option>
+                        <option value="Spring">Spring</option>
+                        <option value="Summer">Summer</option>
+                        <option value="Fall">Fall</option>
+                        <option value="Winter">Winter</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="ceremony_type" class="form-label">Indoor or Outdoor Ceremony?</label>
+                    <select id="ceremony_type" name="ceremony_type" class="form-select" required>
+                        <option value="">Select ceremony type</option>
+                        <option value="Indoor">Indoor</option>
+                        <option value="Outdoor">Outdoor</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="guest_count" class="form-label">Estimated Guest Count</label>
+                    <input type="number" id="guest_count" name="guest_count" class="form-input" min="1" max="500" placeholder="Enter number of guests" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="wedding_style" class="form-label">Wedding Style</label>
+                    <select id="wedding_style" name="wedding_style" class="form-select" required>
+                        <option value="">Select your style</option>
+                        <option value="Elegant">Elegant</option>
+                        <option value="Modern">Modern</option>
+                        <option value="Rustic">Rustic</option>
+                        <option value="Intimate">Intimate</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Associated Events You're Interested In</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="bridal_shower" name="events[]" value="Bridal Shower" class="form-checkbox">
+                            <label for="bridal_shower" class="checkbox-label">Bridal Shower</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="bachelor_party" name="events[]" value="Bachelor Party" class="form-checkbox">
+                            <label for="bachelor_party" class="checkbox-label">Bachelor Party</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="rehearsal_dinner" name="events[]" value="Rehearsal Dinner" class="form-checkbox">
+                            <label for="rehearsal_dinner" class="checkbox-label">Rehearsal Dinner</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="farewell_brunch" name="events[]" value="Farewell Brunch" class="form-checkbox">
+                            <label for="farewell_brunch" class="checkbox-label">Farewell Brunch</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="name" class="form-label">Your Name*</label>
+                    <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Your Email*</label>
+                    <input type="email" id="email" name="email" class="form-input" placeholder="Enter your email address" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone" class="form-label">Your Phone Number*</label>
+                    <input type="tel" id="phone" name="phone" class="form-input" placeholder="Enter your phone number" required>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <span class="btn-text">Get My Personalized Experience</span>
+                    <div class="loading"></div>
+                </button>
+                
+                <div class="success-message" id="successMessage">
+                    Thank you! We're preparing your personalized experience.
+                </div>
+            </form>
+        </div>
+
+        <!-- Call-to-Action Buttons -->
+        <div class="cta-section">
+            <div class="cta-buttons">
+                <a href="https://calendly.com/events-mileaestatevineyard/30min" class="cta-btn primary" target="_blank" rel="noopener">
+                    Schedule a Call with Jamie
+                </a>
+                <a href="https://mileaestatevineyard.com/milea-estate-the-perfect-hudson-valley-wedding-venue/?_kx=XokkUXqwckNBYpDpmPOFRg.XqNiWk" class="cta-btn secondary" target="_blank" rel="noopener">
+                    Curious what makes Milea Estate the best Hudson Valley wedding venue? Read the Article
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Image carousel functionality
+        class WeddingCarousel {
+            constructor() {
+                this.currentSlide = 0;
+                this.slides = document.querySelectorAll('.carousel-slide');
+                this.indicators = document.querySelectorAll('.indicator');
+                this.totalSlides = this.slides.length;
+                this.autoPlayInterval = null;
+                
+                this.init();
+            }
+
+            init() {
+                this.setupIndicators();
+                this.startAutoPlay();
+            }
+
+            setupIndicators() {
+                this.indicators.forEach((indicator, index) => {
+                    indicator.addEventListener('click', () => {
+                        this.goToSlide(index);
+                        this.resetAutoPlay();
+                    });
+                });
+            }
+
+            goToSlide(index) {
+                // Remove active class from current slide and indicator
+                this.slides[this.currentSlide].classList.remove('active');
+                this.indicators[this.currentSlide].classList.remove('active');
+                
+                // Set new current slide
+                this.currentSlide = index;
+                
+                // Add active class to new slide and indicator
+                this.slides[this.currentSlide].classList.add('active');
+                this.indicators[this.currentSlide].classList.add('active');
+            }
+
+            nextSlide() {
+                const nextIndex = (this.currentSlide + 1) % this.totalSlides;
+                this.goToSlide(nextIndex);
+            }
+
+            startAutoPlay() {
+                this.autoPlayInterval = setInterval(() => {
+                    this.nextSlide();
+                }, 3000);
+            }
+
+            resetAutoPlay() {
+                clearInterval(this.autoPlayInterval);
+                this.startAutoPlay();
+            }
+        }
+
+        // Form handling
+        class WeddingQuizForm {
+            constructor() {
+                this.form = document.getElementById('weddingQuiz');
+                this.submitBtn = this.form.querySelector('.submit-btn');
+                this.btnText = this.submitBtn.querySelector('.btn-text');
+                this.loading = this.submitBtn.querySelector('.loading');
+                this.successMessage = document.getElementById('successMessage');
+                
+                this.init();
+            }
+
+            init() {
+                this.form.addEventListener('submit', this.handleSubmit.bind(this));
+                this.setupCheckboxes();
+            }
+
+            setupCheckboxes() {
+                // Add interactive behavior to checkbox items
+                const checkboxItems = document.querySelectorAll('.checkbox-item');
+                
+                checkboxItems.forEach(item => {
+                    const checkbox = item.querySelector('.form-checkbox');
+                    
+                    // Toggle checkbox when item is clicked
+                    item.addEventListener('click', (e) => {
+                        if (e.target !== checkbox) {
+                            checkbox.checked = !checkbox.checked;
+                            this.updateCheckboxState(item, checkbox);
+                        }
+                    });
+                    
+                    // Update state when checkbox is directly clicked
+                    checkbox.addEventListener('change', () => {
+                        this.updateCheckboxState(item, checkbox);
+                    });
+                });
+            }
+
+            updateCheckboxState(item, checkbox) {
+                if (checkbox.checked) {
+                    item.classList.add('checked');
+                } else {
+                    item.classList.remove('checked');
+                }
+            }
+
+            async handleSubmit(e) {
+                e.preventDefault();
+                
+                // Show loading state
+                this.setLoadingState(true);
+                
+                try {
+                    // Get form data
+                    const formData = new FormData(this.form);
+                    
+                    // Collect checked events into a single field for Zapier
+                    const checkedEvents = [];
+                    const eventCheckboxes = this.form.querySelectorAll('input[name="events[]"]:checked');
+                    eventCheckboxes.forEach(checkbox => {
+                        checkedEvents.push(checkbox.value);
+                    });
+                    
+                    // Remove individual event checkboxes and add as single field
+                    formData.delete('events[]');
+                    formData.append('associated_events', checkedEvents.join(', '));
+                    
+                    // Log form data for debugging
+                    console.log('Form data being sent:');
+                    for (let [key, value] of formData.entries()) {
+                        console.log(key, value);
+                    }
+                    
+                    // Send to Zapier webhook
+                    const response = await fetch(this.form.action, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    // Show success state
+                    this.showSuccess();
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                    // Still show success message to user
+                    this.showSuccess();
+                } finally {
+                    this.setLoadingState(false);
+                }
+            }
+
+            setLoadingState(loading) {
+                if (loading) {
+                    this.btnText.style.display = 'none';
+                    this.loading.style.display = 'block';
+                    this.submitBtn.disabled = true;
+                } else {
+                    this.btnText.style.display = 'block';
+                    this.loading.style.display = 'none';
+                    this.submitBtn.disabled = false;
+                }
+            }
+
+            showSuccess() {
+                this.successMessage.style.display = 'block';
+                this.form.reset();
+                
+                // Reset checkbox states
+                const checkboxItems = document.querySelectorAll('.checkbox-item');
+                checkboxItems.forEach(item => {
+                    item.classList.remove('checked');
+                });
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    this.successMessage.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            new WeddingCarousel();
+            new WeddingQuizForm();
+        });
+
+        // Optimize performance
+        window.addEventListener('load', function() {
+            // Preload next images for smoother transitions
+            const images = [
+                'https://i.imgur.com/WalHXL3.jpeg',
+                'https://i.imgur.com/JESR9i2.jpeg',
+                'https://i.imgur.com/8gqd2nH.jpeg',
+                'https://i.imgur.com/5KXtFUR.jpeg',
+                'https://i.imgur.com/fhYQ28D.jpeg'
+            ];
+            
+            images.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+        });
+    </script>
+</body>
+</html>
