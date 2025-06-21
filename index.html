@@ -35,16 +35,86 @@
         }
 
         .logo {
-            width: 20%;
-            max-width: 200px;
-            min-width: 120px;
+            width: 15%;
+            max-width: 150px;
+            min-width: 100px;
             height: auto;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             transition: transform 0.3s ease;
         }
 
         .logo:hover {
             transform: scale(1.05);
+        }
+
+        /* Navigation Menu */
+        .main-nav {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #715100;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #5a4000;
+            background-color: rgba(113, 81, 0, 0.05);
+            transform: translateY(-1px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #715100, #a67c00);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-link {
+                font-size: 1rem;
+                padding: 8px 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 10px;
+            }
+            
+            .nav-link {
+                font-size: 0.9rem;
+                padding: 6px 12px;
+            }
         }
 
         /* Carousel Section */
@@ -157,7 +227,8 @@
         .form-group:nth-child(6) { animation-delay: 0.6s; }
         .form-group:nth-child(7) { animation-delay: 0.7s; }
         .form-group:nth-child(8) { animation-delay: 0.8s; }
-        .submit-btn { animation-delay: 0.9s; }
+        .form-group:nth-child(9) { animation-delay: 0.9s; }
+        .submit-btn { animation-delay: 1.0s; }
 
         @keyframes fadeInUp {
             to {
@@ -185,7 +256,20 @@
             background-color: #fff;
         }
 
-        .form-input:focus, .form-select:focus {
+        .form-textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            background-color: #fff;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
             outline: none;
             border-color: #715100;
             box-shadow: 0 0 0 3px rgba(113, 81, 0, 0.1);
@@ -262,6 +346,28 @@
             .checkbox-group {
                 grid-template-columns: 1fr;
             }
+            
+            .name-row {
+                flex-direction: column;
+            }
+            
+            .name-field {
+                margin-bottom: 15px;
+            }
+            
+            .name-field:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        /* Name fields side by side */
+        .name-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .name-field {
+            flex: 1;
         }
 
         .submit-btn {
@@ -415,8 +521,8 @@
             }
 
             .logo {
-                width: 30%;
-                margin-bottom: 20px;
+                width: 25%;
+                margin-bottom: 15px;
             }
 
             .carousel-container {
@@ -472,6 +578,16 @@
         <!-- Header with Logo -->
         <div class="header">
             <img src="https://i.imgur.com/qfTW5j0.png" alt="Milea Estate Vineyard" class="logo" loading="lazy">
+            
+            <!-- Navigation Menu -->
+            <nav class="main-nav">
+                <ul class="nav-links">
+                    <li><a href="https://mileaestatevineyard.com/" class="nav-link">Home</a></li>
+                    <li><a href="https://mileaestatevineyard.com/weddings/" class="nav-link">Weddings</a></li>
+                    <li><a href="https://mileaestatevineyard.com/acquire/" class="nav-link">Shop</a></li>
+                    <li><a href="https://mileaestatevineyard.com/wine-club/" class="nav-link">Wine Clubs</a></li>
+                </ul>
+            </nav>
         </div>
 
         <!-- Image Carousel -->
@@ -567,8 +683,16 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="name" class="form-label">Your Name*</label>
-                    <input type="text" id="name" name="name" class="form-input" placeholder="Enter your full name" required>
+                    <div class="name-row">
+                        <div class="name-field">
+                            <label for="first_name" class="form-label">First Name*</label>
+                            <input type="text" id="first_name" name="first_name" class="form-input" placeholder="First name" required>
+                        </div>
+                        <div class="name-field">
+                            <label for="last_name" class="form-label">Last Name*</label>
+                            <input type="text" id="last_name" name="last_name" class="form-input" placeholder="Last name" required>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -579,6 +703,11 @@
                 <div class="form-group">
                     <label for="phone" class="form-label">Your Phone Number*</label>
                     <input type="tel" id="phone" name="phone" class="form-input" placeholder="Enter your phone number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="form-label">Tell us about your dream wedding (optional)</label>
+                    <textarea id="message" name="message" class="form-textarea" rows="4" placeholder="Share any special details, questions, or ideas you have for your wedding day..."></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn">
@@ -686,9 +815,12 @@
                 checkboxItems.forEach(item => {
                     const checkbox = item.querySelector('.form-checkbox');
                     
-                    // Toggle checkbox when item is clicked
+                    // Make entire item clickable
                     item.addEventListener('click', (e) => {
-                        if (e.target !== checkbox) {
+                        // Only prevent default if clicking directly on the item or label
+                        // Let the checkbox handle its own clicks naturally
+                        if (e.target === item || e.target.classList.contains('checkbox-label')) {
+                            e.preventDefault();
                             checkbox.checked = !checkbox.checked;
                             this.updateCheckboxState(item, checkbox);
                         }
@@ -696,6 +828,14 @@
                     
                     // Update state when checkbox is directly clicked
                     checkbox.addEventListener('change', () => {
+                        this.updateCheckboxState(item, checkbox);
+                    });
+                    
+                    // Ensure labels work properly
+                    const label = item.querySelector('.checkbox-label');
+                    label.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        checkbox.checked = !checkbox.checked;
                         this.updateCheckboxState(item, checkbox);
                     });
                 });
