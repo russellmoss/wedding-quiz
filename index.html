@@ -719,6 +719,12 @@
                     // Get form data
                     const formData = new FormData(this.form);
                     
+                    // Add Eastern Time timestamp fields
+                    const easternTime = this.getEasternDateTime();
+                    formData.append('submission_date', easternTime.date);
+                    formData.append('submission_time', easternTime.time);
+                    formData.append('submission_timezone', 'Eastern');
+                    
                     // Collect checked events into a single field for Zapier
                     const checkedEvents = [];
                     const eventCheckboxes = this.form.querySelectorAll('input[name="events[]"]:checked');
@@ -752,6 +758,36 @@
                 } finally {
                     this.setLoadingState(false);
                 }
+            }
+
+            getEasternDateTime() {
+                // Get current time in Eastern timezone
+                const now = new Date();
+                const easternTime = new Intl.DateTimeFormat('en-US', {
+                    timeZone: 'America/New_York',
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: true
+                }).formatToParts(now);
+
+                // Build date string (YYYY-MM-DD)
+                const year = easternTime.find(part => part.type === 'year').value;
+                const month = easternTime.find(part => part.type === 'month').value;
+                const day = easternTime.find(part => part.type === 'day').value;
+                const date = `${year}-${month}-${day}`;
+
+                // Build time string (HH:MM:SS AM/PM)
+                const hour = easternTime.find(part => part.type === 'hour').value;
+                const minute = easternTime.find(part => part.type === 'minute').value;
+                const second = easternTime.find(part => part.type === 'second').value;
+                const dayPeriod = easternTime.find(part => part.type === 'dayPeriod').value;
+                const time = `${hour}:${minute}:${second} ${dayPeriod}`;
+
+                return { date, time };
             }
 
             setLoadingState(loading) {
