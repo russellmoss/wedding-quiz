@@ -77,14 +77,17 @@
         }
 
         .hero-content {
-            position: relative;
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
             z-index: 2;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 1200px;
-            padding: 0 40px;
+            justify-content: center;
+            gap: 30px;
+            width: auto;
+            padding: 0;
         }
 
         .nav-left, .nav-right {
@@ -92,17 +95,45 @@
             gap: 20px;
         }
 
-        .logo {
-            width: 200px;
-            max-width: 200px;
-            min-width: 150px;
-            height: auto;
-            transition: transform 0.3s ease;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        /* Navigation Arrows */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(113, 81, 0, 0.8);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 3;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
 
-        .logo:hover {
-            transform: scale(1.05);
+        .carousel-arrow:hover {
+            background: rgba(113, 81, 0, 0.95);
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-arrow.prev {
+            left: 20px;
+        }
+
+        .carousel-arrow.next {
+            right: 20px;
+        }
+
+        .hero-section:hover .carousel-arrow {
+            opacity: 1;
         }
 
         /* Navigation Buttons */
@@ -158,61 +189,6 @@
         .hero-indicator.active {
             background-color: #715100;
             border-color: white;
-        }
-
-        /* Carousel Section */
-        .carousel-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin: 50px auto 20px;
-            overflow: hidden;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(113, 81, 0, 0.2);
-            height: 400px;
-        }
-
-        .carousel-slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
-
-        .carousel-slide.active {
-            opacity: 1;
-        }
-
-        .carousel-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Carousel indicators */
-        .carousel-indicators {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
-        }
-
-        .indicator {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .indicator.active {
-            background-color: #715100;
         }
 
         /* Quiz Form Section */
@@ -555,34 +531,35 @@
             }
 
             .hero-content {
-                flex-direction: column;
-                gap: 20px;
-                padding: 20px;
-            }
-
-            .nav-left, .nav-right {
-                order: 2;
-            }
-
-            .logo {
-                order: 1;
-                width: 150px;
-                min-width: 120px;
-            }
-
-            .nav-left, .nav-right {
+                bottom: 20px;
+                flex-direction: row;
                 flex-wrap: wrap;
+                gap: 15px;
+                padding: 0 20px;
                 justify-content: center;
+            }
+
+            .nav-left, .nav-right {
                 gap: 10px;
+            }
+
+            .carousel-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .carousel-arrow.prev {
+                left: 10px;
+            }
+
+            .carousel-arrow.next {
+                right: 10px;
             }
             
             .nav-link {
                 font-size: 0.9rem;
                 padding: 10px 20px;
-            }
-
-            .carousel-container {
-                height: 250px;
             }
 
             .quiz-section {
@@ -631,18 +608,33 @@
                 padding: 0 10px;
             }
 
+            .hero-content {
+                bottom: 15px;
+                gap: 8px;
+                padding: 0 15px;
+            }
+
             .nav-left, .nav-right {
                 gap: 8px;
+            }
+
+            .carousel-arrow {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+
+            .carousel-arrow.prev {
+                left: 8px;
+            }
+
+            .carousel-arrow.next {
+                right: 8px;
             }
             
             .nav-link {
                 font-size: 0.8rem;
                 padding: 8px 16px;
-            }
-
-            .logo {
-                width: 120px;
-                min-width: 100px;
             }
 
             .quiz-title {
@@ -651,10 +643,6 @@
 
             .quiz-section {
                 padding: 20px;
-            }
-
-            .carousel-container {
-                height: 200px;
             }
         }
 
@@ -690,17 +678,18 @@
             </div>
             
             <div class="hero-overlay"></div>
+            
+            <!-- Navigation Arrows -->
+            <button class="carousel-arrow prev" aria-label="Previous image">‹</button>
+            <button class="carousel-arrow next" aria-label="Next image">›</button>
+            
             <div class="hero-content">
-                <!-- Left Navigation -->
+                <!-- Navigation Buttons -->
                 <div class="nav-left">
                     <a href="https://mileaestatevineyard.com/" class="nav-link">Home</a>
                     <a href="https://mileaestatevineyard.com/weddings/" class="nav-link">Weddings</a>
                 </div>
                 
-                <!-- Logo -->
-                <img src="https://i.imgur.com/qfTW5j0.png" alt="Milea Estate Vineyard" class="logo" loading="lazy">
-                
-                <!-- Right Navigation -->
                 <div class="nav-right">
                     <a href="https://mileaestatevineyard.com/acquire/" class="nav-link">Shop</a>
                     <a href="https://mileaestatevineyard.com/wine-club/" class="nav-link">Wine Clubs</a>
@@ -864,12 +853,14 @@
     </div>
 
     <script>
-        // Image carousel functionality
+        // Hero Image carousel functionality
         class WeddingCarousel {
             constructor() {
                 this.currentSlide = 0;
-                this.slides = document.querySelectorAll('.carousel-slide');
-                this.indicators = document.querySelectorAll('.indicator');
+                this.slides = document.querySelectorAll('.hero-carousel-slide');
+                this.indicators = document.querySelectorAll('.hero-indicator');
+                this.prevBtn = document.querySelector('.carousel-arrow.prev');
+                this.nextBtn = document.querySelector('.carousel-arrow.next');
                 this.totalSlides = this.slides.length;
                 this.autoPlayInterval = null;
                 
@@ -878,6 +869,7 @@
 
             init() {
                 this.setupIndicators();
+                this.setupArrows();
                 this.startAutoPlay();
             }
 
@@ -887,6 +879,18 @@
                         this.goToSlide(index);
                         this.resetAutoPlay();
                     });
+                });
+            }
+
+            setupArrows() {
+                this.prevBtn.addEventListener('click', () => {
+                    this.prevSlide();
+                    this.resetAutoPlay();
+                });
+
+                this.nextBtn.addEventListener('click', () => {
+                    this.nextSlide();
+                    this.resetAutoPlay();
                 });
             }
 
@@ -906,6 +910,11 @@
             nextSlide() {
                 const nextIndex = (this.currentSlide + 1) % this.totalSlides;
                 this.goToSlide(nextIndex);
+            }
+
+            prevSlide() {
+                const prevIndex = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
+                this.goToSlide(prevIndex);
             }
 
             startAutoPlay() {
