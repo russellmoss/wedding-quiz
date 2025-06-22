@@ -765,6 +765,9 @@
             <p class="quiz-subtitle">Tell us about your dream event and we'll create a personalized experience just for you.</p>
             
             <form id="eventInquiry" action="https://hooks.zapier.com/hooks/catch/21145311/uoes9s5/" method="POST">
+                <input type="hidden" name="form_tag" value="event inquiry form">
+                <input type="hidden" name="lifecyclestage" value="lead">
+                
                 <div class="form-group">
                     <label for="desired_date" class="form-label">Desired Date*</label>
                     <input type="date" id="desired_date" name="desired_date" class="form-input" required 
