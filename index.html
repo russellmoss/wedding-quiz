@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wedding Quiz - Milea Estate Vineyard</title>
-    <meta name="description" content="Find your perfect wedding at Milea Estate Vineyard. Take our quiz to get a personalized wedding experience.">
+    <title>Event Inquiry - Milea Estate Vineyard</title>
+    <meta name="description" content="Plan your perfect event at Milea Estate Vineyard. Take our inquiry form to get a personalized experience for your special occasion.">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
@@ -295,6 +295,38 @@
             transform: translateY(-1px);
         }
 
+        /* Date input specific styles */
+        .form-input[type="date"] {
+            color: #333;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-input[type="date"]::-webkit-calendar-picker-indicator {
+            background-color: #715100;
+            padding: 5px;
+            cursor: pointer;
+            border-radius: 3px;
+            filter: invert(1);
+        }
+
+        .form-input[type="date"]::-webkit-datetime-edit {
+            color: #333;
+        }
+
+        .form-input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+            color: #333;
+        }
+
+        .form-input[type="date"]::-webkit-datetime-edit-text {
+            color: #666;
+        }
+
+        .form-input[type="date"]::-webkit-datetime-edit-month-field,
+        .form-input[type="date"]::-webkit-datetime-edit-day-field,
+        .form-input[type="date"]::-webkit-datetime-edit-year-field {
+            color: #333;
+        }
+
         /* Checkbox Styles */
         .checkbox-group {
             display: grid;
@@ -312,6 +344,7 @@
             transition: all 0.3s ease;
             cursor: pointer;
             background-color: #fff;
+            user-select: none;
         }
 
         .checkbox-item:hover {
@@ -537,10 +570,14 @@
                 gap: 15px;
                 padding: 0 20px;
                 justify-content: center;
+                align-items: center;
             }
 
             .nav-left, .nav-right {
                 gap: 10px;
+                display: flex;
+                flex-wrap: nowrap;
+                align-items: center;
             }
 
             .carousel-arrow {
@@ -560,6 +597,8 @@
             .nav-link {
                 font-size: 0.9rem;
                 padding: 10px 20px;
+                white-space: nowrap;
+                min-width: fit-content;
             }
 
             .quiz-section {
@@ -595,6 +634,17 @@
             
             .name-field:last-child {
                 margin-bottom: 0;
+            }
+            
+            .form-input[type="date"] {
+                font-size: 16px; /* Prevents zoom on iOS */
+                min-height: 44px; /* Ensures touch-friendly size */
+            }
+            
+            .form-input[type="date"]::-webkit-calendar-picker-indicator {
+                width: 20px;
+                height: 20px;
+                padding: 8px;
             }
         }
 
@@ -635,6 +685,8 @@
             .nav-link {
                 font-size: 0.8rem;
                 padding: 8px 16px;
+                white-space: nowrap;
+                min-width: fit-content;
             }
 
             .quiz-title {
@@ -709,66 +761,35 @@
         <div class="content-wrapper">
             <!-- Quiz Form -->
             <div class="quiz-section">
-            <h1 class="quiz-title">Find Your Perfect Wedding</h1>
-            <p class="quiz-subtitle">Tell us about your dream wedding and we'll create a personalized experience just for you.</p>
+            <h1 class="quiz-title">Let's Plan Your Perfect Event</h1>
+            <p class="quiz-subtitle">Tell us about your dream event and we'll create a personalized experience just for you.</p>
             
-            <form id="weddingQuiz" action="https://hooks.zapier.com/hooks/catch/21145311/uoes9s5/" method="POST">
+            <form id="eventInquiry" action="https://hooks.zapier.com/hooks/catch/21145311/uoes9s5/" method="POST">
                 <div class="form-group">
-                    <label for="season" class="form-label">What season are you envisioning?</label>
-                    <select id="season" name="season" class="form-select" required>
-                        <option value="">Select a season</option>
-                        <option value="Spring">Spring</option>
-                        <option value="Summer">Summer</option>
-                        <option value="Fall">Fall</option>
-                        <option value="Winter">Winter</option>
+                    <label for="desired_date" class="form-label">Desired Date*</label>
+                    <input type="date" id="desired_date" name="desired_date" class="form-input" required 
+                           style="padding: 12px 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem; width: 100%; font-family: inherit; background-color: #fff; color: #333;">
+                </div>
+
+                <div class="form-group">
+                    <label for="event_type" class="form-label">Event Type*</label>
+                    <select id="event_type" name="event_type" class="form-select" required>
+                        <option value="">Select event type</option>
+                        <option value="Anniversary">Anniversary</option>
+                        <option value="Birthday">Birthday</option>
+                        <option value="Catering">Catering</option>
+                        <option value="Corporate">Corporate</option>
+                        <option value="Engagement">Engagement</option>
+                        <option value="Graduation">Graduation</option>
+                        <option value="Happy Hour">Happy Hour</option>
+                        <option value="Holiday Party">Holiday Party</option>
+                        <option value="Large Group">Large Group</option>
+                        <option value="Non Profit">Non Profit</option>
+                        <option value="Other">Other</option>
+                        <option value="Rehearsal Dinner">Rehearsal Dinner</option>
+                        <option value="Shower">Shower</option>
+                        <option value="Wedding">Wedding</option>
                     </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="ceremony_type" class="form-label">Indoor or Outdoor Ceremony?</label>
-                    <select id="ceremony_type" name="ceremony_type" class="form-select" required>
-                        <option value="">Select ceremony type</option>
-                        <option value="Indoor">Indoor</option>
-                        <option value="Outdoor">Outdoor</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="guest_count" class="form-label">Estimated Guest Count</label>
-                    <input type="number" id="guest_count" name="guest_count" class="form-input" min="1" max="500" placeholder="Enter number of guests" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="wedding_style" class="form-label">Wedding Style</label>
-                    <select id="wedding_style" name="wedding_style" class="form-select" required>
-                        <option value="">Select your style</option>
-                        <option value="Elegant">Elegant</option>
-                        <option value="Modern">Modern</option>
-                        <option value="Rustic">Rustic</option>
-                        <option value="Intimate">Intimate</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">Associated Events You're Interested In</label>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="bridal_shower" name="events[]" value="Bridal Shower" class="form-checkbox">
-                            <label for="bridal_shower" class="checkbox-label">Bridal Shower</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="bachelor_party" name="events[]" value="Bachelor Party" class="form-checkbox">
-                            <label for="bachelor_party" class="checkbox-label">Bachelor Party</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="rehearsal_dinner" name="events[]" value="Rehearsal Dinner" class="form-checkbox">
-                            <label for="rehearsal_dinner" class="checkbox-label">Rehearsal Dinner</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="farewell_brunch" name="events[]" value="Farewell Brunch" class="form-checkbox">
-                            <label for="farewell_brunch" class="checkbox-label">Farewell Brunch</label>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="form-group">
@@ -794,9 +815,59 @@
                     <input type="tel" id="phone" name="phone" class="form-input" placeholder="Enter your phone number" required>
                 </div>
 
+                <!-- Wedding-specific fields -->
+                <div id="wedding-fields" class="wedding-specific-fields" style="display: none;">
+                    <div class="form-group">
+                        <label for="ceremony_type" class="form-label">Indoor or Outdoor Ceremony?*</label>
+                        <select id="ceremony_type" name="ceremony_type" class="form-select" required>
+                            <option value="">Select ceremony type</option>
+                            <option value="Indoor">Indoor</option>
+                            <option value="Outdoor">Outdoor</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="wedding_style" class="form-label">Wedding Style</label>
+                        <select id="wedding_style" name="wedding_style" class="form-select">
+                            <option value="">Select your style</option>
+                            <option value="Elegant">Elegant</option>
+                            <option value="Modern">Modern</option>
+                            <option value="Rustic">Rustic</option>
+                            <option value="Intimate">Intimate</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Associated Events You're Interested In</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="bridal_shower" name="events[]" value="Bridal Shower" class="form-checkbox">
+                                <label for="bridal_shower" class="checkbox-label">Bridal Shower</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="bachelor_party" name="events[]" value="Bachelor(ette) Party" class="form-checkbox">
+                                <label for="bachelor_party" class="checkbox-label">Bachelor(ette) Party</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="rehearsal_dinner" name="events[]" value="Rehearsal Dinner" class="form-checkbox">
+                                <label for="rehearsal_dinner" class="checkbox-label">Rehearsal Dinner</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="farewell_brunch" name="events[]" value="Farewell Brunch" class="form-checkbox">
+                                <label for="farewell_brunch" class="checkbox-label">Farewell Brunch</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group">
-                    <label for="message" class="form-label">Tell us about your dream wedding (optional)</label>
-                    <textarea id="message" name="message" class="form-textarea" rows="4" placeholder="Share any special details, questions, or ideas you have for your wedding day..."></textarea>
+                    <label for="guest_count" class="form-label">Estimated Guest Count*</label>
+                    <input type="number" id="guest_count" name="guest_count" class="form-input" min="1" max="500" placeholder="Enter number of guests" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="form-label" id="message-label">Tell us about your dream event*</label>
+                    <textarea id="message" name="message" class="form-textarea" rows="4" placeholder="Share any special details, questions, or ideas you have for your event..." required></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn">
@@ -825,7 +896,7 @@
 
     <script>
         // Hero Image carousel functionality
-        class WeddingCarousel {
+        class EventCarousel {
             constructor() {
                 this.currentSlide = 0;
                 this.slides = document.querySelectorAll('.hero-carousel-slide');
@@ -901,9 +972,9 @@
         }
 
         // Form handling
-        class WeddingQuizForm {
+        class EventInquiryForm {
             constructor() {
-                this.form = document.getElementById('weddingQuiz');
+                this.form = document.getElementById('eventInquiry');
                 this.submitBtn = this.form.querySelector('.submit-btn');
                 this.btnText = this.submitBtn.querySelector('.btn-text');
                 this.loading = this.submitBtn.querySelector('.loading');
@@ -926,24 +997,23 @@
                     
                     // Make entire item clickable
                     item.addEventListener('click', (e) => {
-                        // Only prevent default if clicking directly on the item or label
-                        // Let the checkbox handle its own clicks naturally
-                        if (e.target === item || e.target.classList.contains('checkbox-label')) {
-                            e.preventDefault();
-                            checkbox.checked = !checkbox.checked;
-                            this.updateCheckboxState(item, checkbox);
-                        }
+                        // Prevent default behavior and toggle checkbox
+                        e.preventDefault();
+                        e.stopPropagation();
+                        checkbox.checked = !checkbox.checked;
+                        this.updateCheckboxState(item, checkbox);
                     });
                     
-                    // Update state when checkbox is directly clicked
-                    checkbox.addEventListener('change', () => {
-                        this.updateCheckboxState(item, checkbox);
+                    // Prevent checkbox clicks from bubbling up to avoid double-toggling
+                    checkbox.addEventListener('click', (e) => {
+                        e.stopPropagation();
                     });
                     
                     // Ensure labels work properly
                     const label = item.querySelector('.checkbox-label');
                     label.addEventListener('click', (e) => {
                         e.preventDefault();
+                        e.stopPropagation();
                         checkbox.checked = !checkbox.checked;
                         this.updateCheckboxState(item, checkbox);
                     });
@@ -984,6 +1054,15 @@
                     // Remove individual event checkboxes and add as single field
                     formData.delete('events[]');
                     formData.append('associated_events', checkedEvents.join(', '));
+                    
+                    // Add event type to form data
+                    const eventType = formData.get('event_type');
+                    if (eventType && eventType !== 'Wedding') {
+                        // For non-wedding events, clear wedding-specific fields
+                        formData.delete('ceremony_type');
+                        formData.delete('wedding_style');
+                        formData.delete('associated_events');
+                    }
                     
                     // Log form data for debugging
                     console.log('Form data being sent:');
@@ -1070,8 +1149,55 @@
 
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
-            new WeddingCarousel();
-            new WeddingQuizForm();
+            new EventCarousel();
+            new EventInquiryForm();
+            
+            // Event type change handler
+            const eventTypeSelect = document.getElementById('event_type');
+            const weddingFields = document.getElementById('wedding-fields');
+            const messageLabel = document.getElementById('message-label');
+            const messageTextarea = document.getElementById('message');
+            
+            if (eventTypeSelect) {
+                eventTypeSelect.addEventListener('change', function() {
+                    const selectedEvent = this.value;
+                    
+                    // Show/hide wedding-specific fields
+                    if (selectedEvent === 'Wedding') {
+                        weddingFields.style.display = 'block';
+                        messageLabel.textContent = 'Tell us about your dream wedding*';
+                        messageTextarea.placeholder = 'Share any special details, questions, or ideas you have for your wedding day...';
+                        
+                        // Make wedding-specific fields required
+                        document.getElementById('ceremony_type').required = true;
+                        document.getElementById('wedding_style').required = false;
+                    } else {
+                        weddingFields.style.display = 'none';
+                        messageLabel.textContent = 'Tell us about your dream event*';
+                        messageTextarea.placeholder = 'Share any special details, questions, or ideas you have for your event...';
+                        
+                        // Remove required from wedding-specific fields
+                        document.getElementById('ceremony_type').required = false;
+                        document.getElementById('wedding_style').required = false;
+                        
+                        // Clear wedding-specific field values
+                        document.getElementById('ceremony_type').value = '';
+                        document.getElementById('wedding_style').value = '';
+                        
+                        // Clear checkbox selections
+                        const checkboxes = document.querySelectorAll('input[name="events[]"]');
+                        checkboxes.forEach(checkbox => {
+                            checkbox.checked = false;
+                        });
+                        
+                        // Reset checkbox visual states
+                        const checkboxItems = document.querySelectorAll('.checkbox-item');
+                        checkboxItems.forEach(item => {
+                            item.classList.remove('checked');
+                        });
+                    }
+                });
+            }
         });
 
         // Optimize performance
