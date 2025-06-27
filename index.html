@@ -764,7 +764,7 @@
             <h1 class="quiz-title">Let's Plan Your Perfect Event</h1>
             <p class="quiz-subtitle">Tell us about your dream event and we'll create a personalized experience just for you.</p>
             
-            <form id="eventInquiry" action="https://hooks.zapier.com/hooks/catch/21145311/uoes9s5/" method="POST">
+            <form id="eventInquiry" action="https://hooks.zapier.com/hooks/catch/21145311/uyvc1uy/" method="POST">
                 <input type="hidden" name="form_tag" value="event inquiry form">
                 <input type="hidden" name="lifecyclestage" value="lead">
                 
@@ -1047,6 +1047,10 @@
                     formData.append('submission_time', easternTime.time);
                     formData.append('submission_timezone', 'Eastern');
                     
+                    // Add original UTC timestamp for your records
+                    const utcTimestamp = new Date().toISOString();
+                    formData.append('submission_timestamp_utc', utcTimestamp);
+                    
                     // Collect checked events into a single field for Zapier
                     const checkedEvents = [];
                     const eventCheckboxes = this.form.querySelectorAll('input[name="events[]"]:checked');
@@ -1099,7 +1103,7 @@
                     year: 'numeric',
                     month: '2-digit',
                     day: '2-digit',
-                    hour: '2-digit',
+                    hour: 'numeric',
                     minute: '2-digit',
                     second: '2-digit',
                     hour12: true
@@ -1111,7 +1115,7 @@
                 const day = easternTime.find(part => part.type === 'day').value;
                 const date = `${year}-${month}-${day}`;
 
-                // Build time string (HH:MM:SS AM/PM)
+                // Build time string (H:MM:SS AM/PM) - note: hour is not zero-padded
                 const hour = easternTime.find(part => part.type === 'hour').value;
                 const minute = easternTime.find(part => part.type === 'minute').value;
                 const second = easternTime.find(part => part.type === 'second').value;
